@@ -2,7 +2,7 @@ import httpx
 import asyncio
 import base64
 
-from anthropic import AsyncAnthropic
+from anthropic import AsyncAnthropic, omit
 
 from config_data.config import Config, load_config
 
@@ -41,7 +41,7 @@ async def get_ai_answer(user_prompt: str, system_prompt: str | None = None, imag
     message = await client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=2048,
-        system=system_prompt if system_prompt else None,
+        system=system_prompt if system_prompt else omit,
         messages=messages
     )
     return message.content[0].text
