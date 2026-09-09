@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import random
 from pathlib import Path
 from typing import Dict, Optional
 from datetime import datetime
@@ -50,6 +51,8 @@ class SessionManager:
                 channel = await self.session.get_channel(chat.id)
                 if not channel:
                     return
+                if random.randint(1, 2) == 1:
+                    return
                 accounts = await self.session.get_accounts(channel.base_id)
                 selected_account = None
                 for account in accounts:
@@ -58,6 +61,7 @@ class SessionManager:
                         continue
                     if selected_account.usage is None:
                         break
+
                     if account.usage is None:
                         selected_account = account
                         break
